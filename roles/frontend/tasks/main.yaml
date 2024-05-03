@@ -10,6 +10,13 @@
       state: started
       enabled: yes
 
+  
+  - name: run app pre-requisites
+    ansible.builtin.import_role:
+     name: common
+     tasks_from: app-pre-req
+
+
   - name: delete default website
     ansible.builtin.file:
       path: /usr/share/nginx/html
@@ -22,7 +29,7 @@
 
   - name: download and extract frontend code
     ansible.builtin.unarchive:
-      src: https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip
+      src: https://expense-builds.s3.us-east-1.amazonaws.com/expense-{{ component }}-v2.zip
       dest: /usr/share/nginx/html
       remote_src: yes
 
